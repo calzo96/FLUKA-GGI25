@@ -55,11 +55,71 @@ EndInput
 
 Notes:
 	|This simulations aims to estimate the kaon yield coming out of a graphite target.
-Page: Plot
+Page: Run
 plotengine: Gnuplot
 
 # Run information
 Run: <default>
+	open:     1
+End
+Run: runs_loop_energy/10
+	Define:   kin_E=10
+	Define:   tar_len
+	Define:   beam_sigma
+	Define:   tar_radius
+	Start:    100000.0
+	Exe:      <flukadpm>
+	Status:   3
+	StartRun: 1753098073.6049159
+	queue:    tsp
+	open:     1
+End
+Run: runs_loop_energy/20
+	Define:   kin_E=20
+	Define:   tar_len
+	Define:   beam_sigma
+	Define:   tar_radius
+	Start:    100000.0
+	Exe:      <flukadpm>
+	Status:   3
+	StartRun: 1753098073.6347651
+	queue:    tsp
+	open:     1
+End
+Run: runs_loop_energy/50
+	Define:   kin_E=50
+	Define:   tar_len
+	Define:   beam_sigma
+	Define:   tar_radius
+	Start:    10000.0
+	Exe:      <flukadpm>
+	Status:   3
+	StartRun: 1753098073.6551347
+	queue:    tsp
+	open:     1
+End
+Run: runs_loop_energy/100
+	Define:   kin_E=100
+	Define:   tar_len
+	Define:   beam_sigma
+	Define:   tar_radius
+	Start:    10000.0
+	Exe:      <flukadpm>
+	Status:   3
+	StartRun: 1753098073.6725674
+	queue:    tsp
+	open:     1
+End
+Run: runs_loop_energy/200
+	Define:   kin_E=200
+	Define:   tar_len
+	Define:   beam_sigma
+	Define:   tar_radius
+	Start:    10000.0
+	Exe:      <flukadpm>
+	Status:   3
+	StartRun: 1753098073.6913993
+	queue:    tsp
 	open:     1
 End
 Run: runs/100GeV
@@ -79,7 +139,6 @@ Run: 100GeV_01
 	StartRun: 1753087461.3802876
 	Parent:   runs/100GeV
 	queue:    tsp
-	open:     1
 End
 Run: 100GeV_02
 	Rnd:      2
@@ -87,7 +146,6 @@ Run: 100GeV_02
 	StartRun: 1753087461.402963
 	Parent:   runs/100GeV
 	queue:    tsp
-	open:     1
 End
 Run: 100GeV_03
 	Rnd:      3
@@ -95,7 +153,6 @@ Run: 100GeV_03
 	StartRun: 1753087461.4242187
 	Parent:   runs/100GeV
 	queue:    tsp
-	open:     1
 End
 Run: 100GeV_04
 	Rnd:      4
@@ -103,7 +160,6 @@ Run: 100GeV_04
 	StartRun: 1753087461.4401317
 	Parent:   runs/100GeV
 	queue:    tsp
-	open:     1
 End
 Run: runs/440GeV
 	Define:   kin_E=440
@@ -122,7 +178,6 @@ Run: 440GeV_01
 	StartRun: 1753087535.1030383
 	Parent:   runs/440GeV
 	queue:    tsp
-	open:     1
 End
 Run: 440GeV_02
 	Rnd:      2
@@ -130,7 +185,6 @@ Run: 440GeV_02
 	StartRun: 1753087535.117579
 	Parent:   runs/440GeV
 	queue:    tsp
-	open:     1
 End
 Run: 440GeV_03
 	Rnd:      3
@@ -138,7 +192,6 @@ Run: 440GeV_03
 	StartRun: 1753087535.1313975
 	Parent:   runs/440GeV
 	queue:    tsp
-	open:     1
 End
 Run: 440GeV_04
 	Rnd:      4
@@ -146,7 +199,6 @@ Run: 440GeV_04
 	StartRun: 1753087535.146982
 	Parent:   runs/440GeV
 	queue:    tsp
-	open:     1
 End
 
 # Plots information
