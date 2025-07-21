@@ -1,0 +1,117 @@
+# flair project file
+Version: 300
+Mode: fluka
+Title: Bragg peak in water
+md5: ae58aff4a0e529810d81fd19e32c98be
+Input:
+TITLE
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+*Define the beam characteristics
+BEAM PROTON -0.1
+*Define the beam position
+BEAMPOS
+GEOBEGIN COMBNAME
+*Black body
+SPH blkbody 0.0 0.0 0.0 100000.0
+*Void sphere
+SPH void 0.0 0.0 0.0 10000.0
+*Cylindrical target
+RCC target 0.0 0.0 0.0 0.0 0.0 10.0 5.0
+END
+*Black hole
+REGION BLKBODY 5
+	+blkbody -void
+*Void around
+REGION VOID 5
+	+void -target
+*Target
+REGION TARGET 5
+	+target
+END
+GEOEND
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA , BLCKHOLE BLKBODY
+ASSIGNMA , VACUUM VOID
+ASSIGNMA , WATER TARGET
+USRBIN ene 11 ENERGY -21 5,, 10 0,, 0 50,, 100
+*Set the random number seed
+RANDOMIZ , 1.0
+*Set the number of primary histories to be simulated in the run
+START
+STOP
+EndInput
+
+Notes:
+	|In this simulation, a 100 MeV proton pencil beam is impinged on a block of water. The scope is to observe and plot the Bragg peak
+Page: Plot
+plotengine: Gnuplot
+
+# Run information
+Run: <default>
+	open:     1
+End
+Run: runs/bragg_peak
+	Start:    10000.0
+	Last:     1
+	Status:   3
+	open:     1
+End
+Run: bragg_peak_01
+	Rnd:      1
+	Last:     1
+	Status:   3
+	StartRun: 1753085988.664184
+	Parent:   runs/bragg_peak
+	open:     1
+End
+Run: bragg_peak_02
+	Rnd:      2
+	Last:     1
+	Status:   3
+	StartRun: 1753085988.6753585
+	Parent:   runs/bragg_peak
+	open:     1
+End
+Run: bragg_peak_03
+	Rnd:      3
+	Last:     1
+	Status:   3
+	StartRun: 1753085988.689238
+	Parent:   runs/bragg_peak
+	open:     1
+End
+Run: bragg_peak_04
+	Rnd:      4
+	Last:     1
+	Status:   3
+	StartRun: 1753085988.703215
+	Parent:   runs/bragg_peak
+	open:     1
+End
+
+# Plots information
+Plot: bragg_peak_geometry
+	Type: Geometry
+	basisu: 1.0 0.0 0.0
+	basisv: 0.0 1.0 0.0
+	extends: 100.0 100.0
+	grid: 0
+	origin: 0.0 0.0 0.0
+	title: Geometry Bragg peak in water
+End
+Plot: runs/energy_1d
+	Type: USRBIN
+	cblog: 1
+	cbtics: 1
+	datafile: runs/bragg_peak_21.bnn
+	grid: 0
+	group: runs/bragg_peak
+	hist: 1D Projection
+	lc.0: red
+	norm: 5*5*3.14*1000
+	open: 1
+	title: Bragg peak (100 MeV protons in water)
+	xlabel: z [cm]
+	ylabel: E_d [MeV/cm/pr]
+End
