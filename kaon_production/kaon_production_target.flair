@@ -1,0 +1,229 @@
+# flair project file
+Version: 300
+Mode: fluka
+Title: Kaon production target
+md5: 75901087e7fae26d0cec6965d9ff943c
+Input:
+TITLE
+*Set the defaults for precision simulations
+DEFAULTS PRECISIO
+#define kin_E '100 * GeV'
+#define tar_len '80 * cm'
+#define beam_sigma '0.5 * cm'
+#define tar_radius =3*beam_sigma
+*Define the beam characteristics
+BEAM , =-kin_E,,, =-beam_sigma*fwhm '=-beam_sigma * fwhm'
+*Define the beam position
+BEAMPOS
+GEOBEGIN COMBNAME
+*Black body
+SPH blkbody 0.0 0.0 0.0 100000.0
+*Void sphere
+SPH void 0.0 0.0 0.0 10000.0
+*Cylindrical target
+RCC target 0.0 0.0 0.0 0.0 0.0 10.0 5.0
+END
+*Black hole
+REGION BLKBODY 5
+	+blkbody -void
+*Void around
+REGION VOID 5
+	+void -target
+*Target
+REGION TARGET 5
+	+target
+END
+GEOEND
+MATERIAL GRAPHITE 6,, 1.7
+MAT-PROP ,,, 78.0 GRAPHITE
+MAT-PROP DPA-ENER 31.0,,, GRAPHITE
+STERNHEI GRAPHITE 3.155 0.048 2.5387 0.20762 2.9532 0.14
+*..+....1....+....2....+....3....+....4....+....5....+....6....+....7..
+ASSIGNMA , BLCKHOLE BLKBODY
+ASSIGNMA , VACUUM VOID
+ASSIGNMA , GRAPHITE TARGET
+USRBDX kp 1 KAON+ -21 TARGET VOID 1 =kin_E 0 100
+USRBDX km 1 KAON- -21 TARGET VOID 1 =kin_E 0 100
+USRBDX pip 1 PION+ -21 TARGET VOID 1 =kin_E 0 100
+USRBDX pim 1 PION- -21 TARGET VOID 1 =kin_E 0 100
+*Set the random number seed
+RANDOMIZ , 1.0
+*Set the number of primary histories to be simulated in the run
+START
+STOP
+EndInput
+
+Notes:
+	|This simulations aims to estimate the kaon yield coming out of a graphite target.
+Page: Plot
+plotengine: Gnuplot
+
+# Run information
+Run: <default>
+	open:     1
+End
+Run: runs/100GeV
+	Define:   kin_E=100
+	Define:   tar_len
+	Define:   beam_sigma
+	Define:   tar_radius
+	Start:    10000.0
+	Exe:      <flukadpm>
+	Status:   3
+	queue:    tsp
+	open:     1
+End
+Run: 100GeV_01
+	Rnd:      1
+	Status:   3
+	StartRun: 1753087461.3802876
+	Parent:   runs/100GeV
+	queue:    tsp
+	open:     1
+End
+Run: 100GeV_02
+	Rnd:      2
+	Status:   3
+	StartRun: 1753087461.402963
+	Parent:   runs/100GeV
+	queue:    tsp
+	open:     1
+End
+Run: 100GeV_03
+	Rnd:      3
+	Status:   3
+	StartRun: 1753087461.4242187
+	Parent:   runs/100GeV
+	queue:    tsp
+	open:     1
+End
+Run: 100GeV_04
+	Rnd:      4
+	Status:   3
+	StartRun: 1753087461.4401317
+	Parent:   runs/100GeV
+	queue:    tsp
+	open:     1
+End
+Run: runs/440GeV
+	Define:   kin_E=440
+	Define:   tar_len
+	Define:   beam_sigma
+	Define:   tar_radius
+	Start:    10000.0
+	Exe:      <flukadpm>
+	Status:   3
+	queue:    tsp
+	open:     1
+End
+Run: 440GeV_01
+	Rnd:      1
+	Status:   3
+	StartRun: 1753087535.1030383
+	Parent:   runs/440GeV
+	queue:    tsp
+	open:     1
+End
+Run: 440GeV_02
+	Rnd:      2
+	Status:   3
+	StartRun: 1753087535.117579
+	Parent:   runs/440GeV
+	queue:    tsp
+	open:     1
+End
+Run: 440GeV_03
+	Rnd:      3
+	Status:   3
+	StartRun: 1753087535.1313975
+	Parent:   runs/440GeV
+	queue:    tsp
+	open:     1
+End
+Run: 440GeV_04
+	Rnd:      4
+	Status:   3
+	StartRun: 1753087535.146982
+	Parent:   runs/440GeV
+	queue:    tsp
+	open:     1
+End
+
+# Plots information
+Plot: kaon_production_target_geometry
+	Type: Geometry
+	basisu: 1.0 0.0 0.0
+	basisv: 0.0 1.0 0.0
+	extends: 100.0 100.0
+	grid: 0
+	origin: 0.0 0.0 0.0
+	title: Geometry Kaon production target
+End
+Plot: runs/100GeV_21_plot
+	Type: USR-1D
+	det.1: 2
+	det.2: 4
+	det.3: 6
+	file.0: runs/100GeV_21_tab.lis
+	file.1: runs/100GeV_21_tab.lis
+	file.2: runs/100GeV_21_tab.lis
+	file.3: runs/100GeV_21_tab.lis
+	grid: 0
+	group: runs/100GeV
+	lc.0: red
+	lc.1: blue
+	lc.2: black
+	lc.3: brown
+	lw.0: 2
+	lw.1: 2
+	lw.2: 2
+	lw.3: 2
+	name.0: K+
+	name.1: K-
+	name.2: PI+
+	name.3: PI-
+	ndetectors: 4
+	open: 1
+	title: USR-1D runs/100GeV 21
+	x.0: 2
+	x.1: 2
+	x.2: 2
+	x.3: 2
+	xlabel: E [GeV]
+	ylabel: dN/dE [-/GeV]
+	ylog: 1
+End
+Plot: runs/440GeV_21_plot
+	Type: USR-1D
+	det.1: 2
+	det.2: 4
+	det.3: 6
+	file.0: runs/440GeV_21_tab.lis
+	file.1: runs/440GeV_21_tab.lis
+	file.2: runs/440GeV_21_tab.lis
+	file.3: runs/440GeV_21_tab.lis
+	grid: 0
+	group: runs/440GeV
+	lc.0: red
+	lc.1: blue
+	lc.2: black
+	lc.3: brown
+	lw.0: 2
+	lw.1: 2
+	lw.2: 2
+	lw.3: 2
+	name.0: K+
+	name.1: K-
+	name.2: PI+
+	name.3: PI-
+	ndetectors: 4
+	open: 1
+	title: USR-1D runs/440GeV 21
+	x.0: 2
+	x.1: 2
+	x.2: 2
+	x.3: 2
+	xlabel: E [GeV]
+	ylabel: dN/dE [-/GeV]
+	ylog: 1
+End
